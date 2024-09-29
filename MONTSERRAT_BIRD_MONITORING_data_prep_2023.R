@@ -164,7 +164,7 @@ add<-data.frame(Year=2015, Species=rep(SPECIES,each=3), Point='15', Count=rep(1:
 birds<-rbind(birds,add)
 
 head(obsCov)
-add<-data.frame(year=2015, Point='15', Count=rep(1:3), Rain=NA, obs=2, skill=1, rain=0, wind=0, Year=2015, Day=37, time=150, ACT=0.2)
+add<-data.frame(year=2015, Point='15', Count=rep(1:3), Rain=NA, obs=2, skill=1, rain=0, wind=factor(1, levels = c(1,2,3,4), ordered = T), Year=2015, Day=37, time=150, ACT=0.2)
 obsCov<-rbind(obsCov,add)
 
 
