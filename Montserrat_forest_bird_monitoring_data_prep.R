@@ -24,6 +24,9 @@ removal<-c(99,76)	# these are the two Points that cause error in JAGS, but here
 # set working directory
 # getwd()
 # setwd('C:/Users/filib/Documents/Praktika/Sempach/Montserrat/') # this works when applying the script local but not on git actions - there data/ file has to be used  
+#try(setwd("C:/STEFFEN/OneDrive - THE ROYAL SOCIETY FOR THE PROTECTION OF BIRDS/STEFFEN/RSPB/UKOT/Montserrat/Analysis/Population_status_assessment/AnnualMonitoring/Montserrat"), silent=T)
+
+
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # 2. Load data from database (until 2024) and Survey123 upload (after 2024)  --------
@@ -38,6 +41,8 @@ import <- fread("data/Montserrat_Forest_Bird_Survey_0.csv") # read in data from 
 # import <- import %>% filter(!(GlobalID %in% tblVisit$GlobalID)) %>% # I'm not totally sure if this step is needed, revise this later 
   # filter(Editor!="edwards.alice_Ext")
 head(import)
+
+
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # 3. Manipulate data from the Survey123 app --------
@@ -181,7 +186,7 @@ birds <- rbind(tblBirdData, impBirdData)
 tblVisit <- rbind(impVisit, tblVisit)
 
 # get rid of object that arent needed anymore 
-needed_objects <- c('birds', 'tblVisit', 'Point_hab', 'tblSpecies', 'Point_tree', 'select', 'filter', 'rename', 'YEAR', 'removal', 'SPECIES')
+needed_objects <- c('birds', 'tblVisit', 'tblLoc','Point_hab', 'tblSpecies', 'Point_tree', 'select', 'filter', 'rename', 'YEAR', 'removal', 'SPECIES')
 rm(list = setdiff(ls(), needed_objects)) # remove all unneeded objects 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -352,7 +357,7 @@ unique(countdata$Species) # should contain all Species you want to study
 countdata %>% filter(is.na(VisitID))
 
 # fill in the objects you want to save from the environment for further analysis
-needed_objects <- c('countdata', 'obsCov', 'siteCov', 'tblSpecies', 'YEAR', 'SPECIES', 'removal')
+needed_objects <- c('countdata', 'obsCov', 'siteCov', 'tblSpecies', 'YEAR', 'SPECIES', 'removal','tblLoc')
 rm(list = setdiff(ls(), needed_objects)) # remove all unneeded objects 
 
 # save the prepared data for other possible analysis 
