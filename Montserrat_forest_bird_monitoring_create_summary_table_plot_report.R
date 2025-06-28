@@ -47,7 +47,7 @@ for (f in allout){
   x<-fread(paste0('output/', f))
   trendout<-trendout %>% bind_rows(x %>% dplyr::filter(parameter %in% c("trend","trend2")))
   annestimates<-annestimates %>% bind_rows(x %>% dplyr::filter(substr(parameter,1,6)=="totalN"))
-  annpointestimates<-annestimates %>% bind_rows(x %>% dplyr::filter(substr(parameter,1,1)=="N"))
+  annpointestimates<-annestimates %>% bind_rows(x %>% dplyr::filter(substr(parameter,1,1)=="N")) # I THINK HERE THE MISTAKE STARTS
 }
 
 # export two files with collected data 
@@ -65,20 +65,21 @@ points<- tblLoc %>%
   arrange(Point) %>%
   mutate(order=seq_along(Point))
 
+### REMOVED SINCE THIS CAUSES AN ERROR!
 
-out<-annpointestimates %>% separate_wider_delim(.,cols=parameter,delim=", ", names=c("Point","Year"))
-out$Point<-str_replace_all(out$Point,pattern="[^[:alnum:]]", replacement="")
-out$Year<-str_replace_all(out$Year,pattern="[^[:alnum:]]", replacement="")
-out$order<-str_replace_all(out$Point,pattern="N", replacement="")
+# out<-annpointestimates %>% separate_wider_delim(.,cols=parameter,delim=", ", names=c("Point","Year"))
+# out$Point<-str_replace_all(out$Point,pattern="[^[:alnum:]]", replacement="")
+# out$Year<-str_replace_all(out$Year,pattern="[^[:alnum:]]", replacement="")
+# out$order<-str_replace_all(out$Point,pattern="N", replacement="")
 
-mapdata<-out %>%
-  mutate(Year=as.numeric(Year)+2010) %>%
-  mutate(order=as.numeric(order)) %>%
-  dplyr::select(-Point) %>%
-  left_join(points, by="order") %>%
-  dplyr::select(species,Year,Point, Eastings,Northings,Altitude,Habitat_Code,mean, median, lcl,ucl)
+# mapdata<-out %>%
+#   mutate(Year=as.numeric(Year)+2010) %>%
+#   mutate(order=as.numeric(order)) %>%
+#   dplyr::select(-Point) %>%
+#   left_join(points, by="order") %>%
+#   dplyr::select(species,Year,Point, Eastings,Northings,Altitude,Habitat_Code,mean, median, lcl,ucl)
 
-fwrite(mapdata,"output/Annual_estimates_mapdata.csv")
+# fwrite(mapdata,"output/Annual_estimates_mapdata.csv")
 
 
 
